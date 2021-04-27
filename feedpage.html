@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Feed</title>
+    <style type=text/css>
+        .topdiv {
+            margin-top: 10px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 25%;
+            color: darkblue;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        
+        .leftdiv {
+            position: fixed;
+            top: 100px;
+            left: 0;
+            width: 25%;
+            color: brown;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+        
+        .container {
+            text-align: center;
+        }
+        
+        .middlediv {
+            display: inline-block;
+            margin-top: 10px;
+            width: 40%;
+            color: black;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        
+        .rightdiv {
+            position: fixed;
+            top: 100px;
+            right: 0;
+            width: 25%;
+            color: brown;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+        
+        .topdiv,
+        .leftdiv,
+        .middlediv,
+        .rightdiv {
+            padding: 1%;
+            background-color: whitesmoke;
+            border-width: thin;
+            border: solid black;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("button").click(function() {
+                var qid = $(this).attr('name');
+                console.log("here");
+                console.log(qid);
+                $.ajax({
+                    url: "{% url 'like' %}",
+                    data: {
+                        'qid': qid,
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        $('#like_count' + qid).html(response.likes_count);
+                        $('#like_message' + qid).html(response.message);
+                    },
+                });
+            })
+        });
+    </script>
+</head>
+
+<body bgcolor="teal">
+    <div style="width: 100%; height: 100%">
+        <nav>
+            <div class="topdiv">
+                <pre><a href="{% url 'feed' %}" style="text-decoration: none;">Feed</a>  |    Hello, {{ user.username }}    |  <a href="{% url 'logout' %}" style="text-decoration: none;">LOGOUT</a></pre>
+            </div>
+        </nav>
+        <div class="leftdiv">
+            <ul>
+                {% for gen in genre %}
+                <li><a href="{% url 'specific' gen.id %}" style="text-decoration: none;">{{gen.genre}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="rightdiv">
+            <ul>
+                <li><a href="{% url 'answer' %}" style="text-decoration: none;">Answer a question</a></li>
+                <li><a href="{% url 'ask' %}" style="text-decoration: none;">Ask a question</a></li>
+            </ul>
+
+        </div>
+
+        {% for ques in question %}
+        <div class="container">
+            {% if ques.status %}
+            <div class="middlediv">
+
+                <h1>{{ques.content}}</h1>
+                <pre>Asked by: {{ques.quser}}       Answered by: {{ques.auser}}</pre>
+                <hr>
+                <p style="font-family: 'Times New Roman', Times, serif; font-style: italic; font-weight:bold ">{{ques.answer}}</p>
+                <hr>
+                <p id="like_count{{ques.id}}">{{ ques.likecount }}</p>
+                <button id="{{ques.id}}" name="{{ques.id}}" class="btn btn-info btn-lg" type="button" value="like">
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                    Like
+                    </button>
+                <p id="like_message{{ques.id}}"></p>
+
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+    </div>
+</body>
+</html>

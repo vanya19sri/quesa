@@ -1,0 +1,51 @@
+
+{% block content %}
+<h2>Sign up</h2>
+<form method="post">
+  {% csrf_token %}
+    {% for field in form %}
+    <p>
+      {{ field.label_tag }}<br>
+      {{ field }}
+      {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+      {% endfor %}
+    </p>
+  <button type="submit" >Sign up</button>
+</form>
+{% endblock %}
+
+
+<input type="text" class="input-field" placeholder="Enter Password"required>
+
+
+<form id="login" class="input-group" method="post">
+  {% csrf_token %}
+  {% for field in form %}
+  <input type="text" class="input-field" placeholder="{{ field.label }}" required>
+      {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+    {% endfor %}
+  {% endfor %}
+  
+  <input type="checkbox" class="check-box"><span>Remember password</span>
+  <button type="submit" class="submit-btn">Log in</button>
+  </form>
+
+
+  <script type="text/javascript">
+    var x = document.getElementById("login");
+    var y = document.getElementById("register");
+    var z = document.getElementById("btn");
+
+    function register(){
+      x.style.left = "-400px";
+      y.style.left = "50px";
+      z.style.left = "110px";
+    }
+    function login(){
+      x.style.left = "50px";
+      y.style.left = "450px";
+      z.style.left = "0";
+    }
+    </script>

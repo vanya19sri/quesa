@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Questions to Answer</title>
+  </head>
+  <style>
+    .topdiv
+    {
+      margin-top: 10px;
+			position: fixed;
+			top:0;
+			right:0;
+			width: 25%;
+			color: darkblue;
+			font-family: monospace; 
+			font-weight: bold;
+    }
+    .rightdiv 
+    {
+      position: fixed;
+			top: 100px;
+			right: 0;
+			width: 25%; 
+			color: brown;
+			font-family: Arial, Helvetica, sans-serif;
+			font-weight: bold; 
+    } 
+    .container{
+        text-align: left;
+    }
+    .middlediv 
+    { 
+      display: inline-block;
+			margin-top: 10px;
+			width: 60%; 
+			color: black;
+			font-family: 'Times New Roman', Times, serif;
+    } 
+    .topdiv,.middlediv,.rightdiv{ 
+		padding : 1%; 
+		background-color: white; 
+		border: solid black; 
+		} 
+  </style>
+  <body bgcolor="teal">
+    <div style="width: 100%; height: 100%">
+        <nav>
+        <div class="topdiv">
+          <pre><a href="{% url 'feed' %}" style="text-decoration: none;">Feed</a>  |    Hello, {{ user.username }}    |  <a href="{% url 'logout' %}" style="text-decoration: none;">LOGOUT</a></pre>
+        </div>
+        </nav> 
+        <div class="rightdiv"> 
+            <ul>
+                <li><a href="{% url 'answer' %}" style="text-decoration: none;">Answer a question</a></li>
+                <li><a href="{% url 'ask' %}" style="text-decoration: none;">Ask a question</a></li> 
+            </ul> 
+    
+        </div>
+
+        {% for ques in question %}
+		    <div class="container">
+        	    <div class="middlediv"> 
+				    {% for ques in question %}
+                        <li><a href="{% url 'answerpage' ques.id %}" style="text-decoration: none;">{{ques.content}}</a></li>
+            	    {% endfor %}
+			    </div> 
+		    </div>
+        {% endfor %}
+    </div>
+  </body>
+</html>

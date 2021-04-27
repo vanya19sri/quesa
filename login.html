@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login Form</title>
+	<script src="https://kit.fontawesome.com/af96533af7.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+</head>
+<body>
+
+	<div class="hero">
+
+		<div class="form-box">
+
+			<div class="button-box">
+				<i class="fas fa-user-circle"></i>
+			</div>
+		    <form id="login" class="input-group" method="POST">
+		    	{% csrf_token %}
+				<input name="username" type="text" class="input-field" placeholder=" Username" required>
+				<p style="color: red;">{{form.username.errors}}</p>
+				<input name="password" type="password" class="input-field" placeholder=" Enter Password" required>
+				<p style="color: red;">{{form.password.errors}}</p>
+				{% for message in messages %}
+                <h4 style="color: red;">{{message}}</h4>
+                {% endfor %}
+				
+				<button type="submit" class="submit-btn">LOGIN</button>
+		    </form>
+		</div>
+	</div>
+</body>
+</html>

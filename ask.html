@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ask a question</title>
+    <style type=text/css>
+        .topdiv {
+            margin-top: 10px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 25%;
+            color: darkblue;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        
+        .rightdiv {
+            position: fixed;
+            top: 100px;
+            right: 0;
+            width: 25%;
+            color: brown;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+        
+        .topdiv,
+        .rightdiv {
+            padding: 1%;
+            background-color: white;
+            border: solid black;
+        }
+    </style>
+</head>
+
+<body bgcolor="teal">
+    <h2>Ask your question here:</h2>
+    <form action="question" method="POST">
+        {% csrf_token %}
+        <textarea name="question" rows="12" cols="100" spellcheck="true" placeholder="write your question here"></textarea>
+        <br><br>
+        <label>Choose the genre:</label>
+        <select name="genre">
+		{% for gen in genre %}
+		<option value="{{gen.id}}">{{gen.genre}}</option>
+		{% endfor %}
+	</select>
+        <br><br>
+        <label>Want to ask this question anonymously ?</label>
+        <select name="anonymous">
+		<option value="yes">YES</option>
+		<option value="no">NO</option>
+	</select>
+        <br><br>
+        <button type="submit">SAVE</button>
+    </form>
+    <nav>
+        <div class="topdiv">
+            <pre><a href="{% url 'feed' %}" style="text-decoration: none;">Feed</a>  |    Hello, {{ user.username }}    |  <a href="{% url 'logout' %}" style="text-decoration: none;">LOGOUT</a></pre>
+        </div>
+    </nav>
+    <div class="rightdiv">
+        <ul>
+            <li><a href="{% url 'answer' %}" style="text-decoration: none;">Answer a question</a></li>
+            <li><a href="{% url 'ask' %}" style="text-decoration: none;">Ask a question</a></li>
+        </ul>
+    </div>
+</body>
+
+</html>

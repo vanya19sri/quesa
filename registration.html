@@ -1,0 +1,33 @@
+{% load static %}
+<head>
+	<title>Registration Form</title>
+	<script src="https://kit.fontawesome.com/af96533af7.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+
+</head>
+<body>
+
+	<div class="hero">
+
+		<div class="form-box">
+			<div class="button-box">
+				<i class="fas fa-user-circle"></i>
+			</div>
+		    <form name="form" id="register" class="input-group" method="POST">
+				{% csrf_token %}
+				<input name="{{form.username.name}}" type="text"  class="input-field" placeholder=" Username"required>
+				<p style="color: red;">{{form.username.errors}}</p>
+				<input name="email" type="email"  class="input-field" placeholder=" Email Id"required>
+				<p style="color: red;">{{form.email.errors}}</p>
+				<input name="password1" type="password"  class="input-field" placeholder=" Enter Password"required>
+				<p style="color: red;">{{form.password1.errors}}</p>
+				<input name="password2" type="password"  class="input-field" placeholder=" Confirm Password"required>
+				<p style="color: red;">{{form.password2.errors}}</p>
+				<button type="submit" class="submit-btn">REGISTER</button>
+				
+		    </form>
+		</div>
+	        </div>
+
+</body>
+</html>
